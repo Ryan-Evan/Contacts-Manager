@@ -1,52 +1,76 @@
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.SQLClientInfoException;
+import java.util.*;
 
 import util.Input;
 
 public class ContactsApplication {
-
+    static Input userInput = new Input();
     private static List<String> currentRoster;
-
+   static Map<String, String> callRoster = new HashMap<>();
     public static void main(String[] args) throws IOException {
+        roster();
         rosterSwitchCase();
     }
 
     public static void roster() throws IOException {
-        Map<String, String> callRoster = new HashMap<>();
+
 
         FileReader callRosterReader = new FileReader("src", "call-roster.txt", "call-roster.log");
         callRosterReader.writeToLog("Successfully read the " + callRosterReader.getFileName() + " file!");
 
         currentRoster = callRosterReader.getFileLines();
-        System.out.println("Name       | Phone number |");
-        System.out.println("---------------------------");
         for (String currentPerson : currentRoster) {
             String[] contactInfo = currentPerson.split(", ", 2);
             System.out.println(contactInfo[0] + " | " + contactInfo[1] + "\n");
             callRoster.put(contactInfo[0], contactInfo[1]);
         }
-
-        System.out.println(callRoster);
     }
 
-    public static void addContact() throws IOException {
+    public static void localRoster() throws IOException {
+        System.out.println("Name       | Phone number |");
+        System.out.println("---------------------------");
+        callRoster.forEach((key, value) -> System.out.println(key + " | " + value));
 
+    }
+
+
+
+
+
+
+    public static void addContact() throws IOException {
+            userInput.getString();
+        String newName = userInput.getString("Enter the name of the new contact?");
+        String newNumber = userInput.getString("Enter the new contact's number.");
+        callRoster.put(newName, newNumber);
     }
 
     public static void searchIndividualContact() throws IOException {
+        userInput.getString();
+        String userSearch= userInput.getString("What contact are you looking for?");
+            if (callRoster.containsKey(userSearch)){
+               System.out.println(callRoster.get(userSearch));
+            }else {
+                System.out.println("Contact not found");
+            }
+        }
 
-    }
 
     public static void deleteContact() throws IOException {
+        userInput.getString();
+        String userSearch= userInput.getString("What contact are you looking to delete?");
+        if (callRoster.containsKey(userSearch)){
+            callRoster.remove(userSearch);
+            System.out.println(userSearch + " Removed from contact list.");
+        }else {
+            System.out.println("Contact not found");
+        }
 
     }
 
 
     public static void rosterSwitchCase() throws IOException {
-        Input userInput = new Input();
         boolean pickOption = true;
 
         while (pickOption) {
@@ -60,7 +84,7 @@ public class ContactsApplication {
             System.out.println();
             switch (userChoice) {
                 case (1):
-                    roster();
+                    localRoster();
                     System.out.println();
                     break;
                 case (2):
