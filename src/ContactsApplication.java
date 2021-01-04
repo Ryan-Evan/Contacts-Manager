@@ -39,9 +39,19 @@ public class ContactsApplication {
     }
 
     public static void addContact() throws IOException {
-            userInput.getString();
+        userInput.getString();
+        boolean overwriteOption;
         String newName = userInput.getString("Enter the name of the new contact:");
         String newNumber = userInput.getString("Enter " + newName + "'s number:");
+        if (callRoster.containsKey(newName)) {
+            System.out.println("There's already a contact named " + newName + ". Do you want to overwrite it? [Yes / No]");
+            overwriteOption = userInput.yesNo();
+            if (overwriteOption) {
+                callRoster.put(newName, newNumber);
+            } else {
+                System.out.println("Contact not changed.");
+            }
+        }
         callRoster.put(newName, newNumber);
     }
 
