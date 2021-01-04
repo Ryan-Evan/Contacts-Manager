@@ -1,3 +1,6 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLClientInfoException;
 import java.util.*;
@@ -9,6 +12,7 @@ public class ContactsApplication {
     static Input userInput = new Input();
     private static List<String> currentRoster;
     static Map<String, String> callRoster = new HashMap<>();
+    final static String outputFilePath = "src/call-roster.txt";
 
     public static void main(String[] args) throws IOException {
         roster();
@@ -22,7 +26,6 @@ public class ContactsApplication {
         currentRoster = callRosterReader.getFileLines();
         for (String currentPerson : currentRoster) {
             String[] contactInfo = currentPerson.split(", ", 2);
-            System.out.println(contactInfo[0] + " | " + contactInfo[1] + "\n");
             callRoster.put(contactInfo[0], contactInfo[1]);
         }
     }
@@ -38,7 +41,7 @@ public class ContactsApplication {
     public static void addContact() throws IOException {
             userInput.getString();
         String newName = userInput.getString("Enter the name of the new contact:");
-        String newNumber = userInput.getString("Enter the new contact's number:");
+        String newNumber = userInput.getString("Enter " + newName + "'s number:");
         callRoster.put(newName, newNumber);
     }
 
@@ -63,8 +66,19 @@ public class ContactsApplication {
         }
     }
 
-    public static void exitAndSave() {
+    public static void exitAndSave() throws IOException {
+        File file = new File(outputFilePath);
+        BufferedWriter bf = null;
+        bf = new BufferedWriter(new FileWriter(file));
 
+        for (Map.Entry<String, String> entry : callRoster.entrySet()) {
+            assert false;
+            bf.write(entry.getKey() +", " + entry.getValue());
+            bf.newLine();
+        }
+        assert false;
+        bf.flush();
+        bf.close();
     }
 
     public static void rosterSwitchCase() throws IOException {
