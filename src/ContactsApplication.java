@@ -28,9 +28,12 @@ public class ContactsApplication {
     }
 
     public static void localRoster() throws IOException {
-        System.out.println("Name       | Phone number |");
-        System.out.println("---------------------------");
-        callRoster.forEach((key, value) -> System.out.println(key + " | " + value));
+
+        String name = "Name";
+        String number = "Phone Number";
+        System.out.format("%12s | %12s |%n",name, number);
+        System.out.println("-------------------------------");
+        callRoster.forEach((key, value) -> System.out.format("%12s | %12s | %n",key, value));
 
     }
 
