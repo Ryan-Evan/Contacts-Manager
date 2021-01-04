@@ -21,6 +21,8 @@ public class ContactsApplication {
         callRosterReader.writeToLog("Successfully read the " + callRosterReader.getFileName() + " file!");
 
         currentRoster = callRosterReader.getFileLines();
+        System.out.println("Name       | Phone number |");
+        System.out.println("---------------------------");
         for (String currentPerson : currentRoster) {
             String[] contactInfo = currentPerson.split(", ", 2);
             System.out.println(contactInfo[0] + " | " + contactInfo[1] + "\n");
