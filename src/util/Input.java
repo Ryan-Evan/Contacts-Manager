@@ -20,46 +20,58 @@ public class Input {
     }
 
     public boolean yesNo() {
-        System.out.println("[Yes / No]");
-        String input = scanner.nextLine();
-        return (input.trim().toLowerCase().equals("y") || input.trim().toLowerCase().equals("yes"));
+        return yesNo("[Yes / No]");
+    }
+
+    public boolean yesNo(String prompt) {
+        System.out.println(prompt);
+        String input = this.scanner.next();
+        return (input.trim().equalsIgnoreCase("y") || input.trim().equalsIgnoreCase("yes"));
     }
 
     public boolean yesNoNewLine() {
-        System.out.println("[Yes / No]\n");
-        String input = scanner.nextLine();
-        return (input.trim().toLowerCase().equals("y") || input.trim().toLowerCase().equals("yes"));
+        return yesNoNewLine("[Yes / No]");
     }
 
-    public int getInt(int min, int max) {
-        int input;
-        do {
-            System.out.println("Enter a number between " + min + " and " + max +": ");
-            input = this.scanner.nextInt();
-        } while (input < min || input > max);
-        return input;
+    public boolean yesNoNewLine(String prompt) {
+        System.out.println(prompt);
+        String input = scanner.nextLine();
+        return (input.trim().equalsIgnoreCase("y") || input.trim().equalsIgnoreCase("yes"));
     }
 
     public int getInt() {
-        int input;
         System.out.println("Enter a number: ");
-        input = this.scanner.nextInt();
-        return input;
+        return this.scanner.nextInt();
     }
 
-    public double getDouble(double min, double max) {
-        double input;
-        do {
-            System.out.println("Enter a number with decimals between " + min + " and " + max +": ");
-            input = this.scanner.nextDouble();
-        } while (input < min || input > max);
+    public int getInt(int min, int max) {
+        return getInt(min, max,"Enter a number between " + min + " and " + max +": ");
+    }
+
+    public int getInt(int min, int max, String prompt) {
+        int input;
+        do{
+            System.out.println(prompt);
+            input = this.scanner.nextInt();
+        }while(input < min || input > max);
         return input;
     }
 
     public double getDouble() {
-        double input;
         System.out.println("Enter a number with decimals: ");
-        input = this.scanner.nextDouble();
+        return this.scanner.nextDouble();
+    }
+
+    public double getDouble(double min, double max) {
+        return getDouble(min, max, "Enter a number with decimals between " + min + " and " + max +": ");
+    }
+
+    public double getDouble(double min, double max, String prompt){
+        double input;
+        do{
+            System.out.println(prompt);
+            input = this.scanner.nextDouble();
+        }while(input < min || input > max);
         return input;
     }
 
