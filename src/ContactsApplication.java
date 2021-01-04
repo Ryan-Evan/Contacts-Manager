@@ -5,17 +5,17 @@ import java.util.*;
 import util.Input;
 
 public class ContactsApplication {
+
     static Input userInput = new Input();
     private static List<String> currentRoster;
-   static Map<String, String> callRoster = new HashMap<>();
+    static Map<String, String> callRoster = new HashMap<>();
+
     public static void main(String[] args) throws IOException {
         roster();
         rosterSwitchCase();
     }
 
     public static void roster() throws IOException {
-
-
         FileReader callRosterReader = new FileReader("src", "call-roster.txt", "call-roster.log");
         callRosterReader.writeToLog("Successfully read the " + callRosterReader.getFileName() + " file!");
 
@@ -28,24 +28,17 @@ public class ContactsApplication {
     }
 
     public static void localRoster() throws IOException {
-
         String name = "Name";
         String number = "Phone Number";
         System.out.format("%12s | %12s |%n",name, number);
         System.out.println("-------------------------------");
         callRoster.forEach((key, value) -> System.out.format("%12s | %12s | %n",key, value));
-
     }
-
-
-
-
-
 
     public static void addContact() throws IOException {
             userInput.getString();
-        String newName = userInput.getString("Enter the name of the new contact?");
-        String newNumber = userInput.getString("Enter the new contact's number.");
+        String newName = userInput.getString("Enter the name of the new contact:");
+        String newNumber = userInput.getString("Enter the new contact's number:");
         callRoster.put(newName, newNumber);
     }
 
@@ -53,31 +46,32 @@ public class ContactsApplication {
         userInput.getString();
         String userSearch= userInput.getString("What contact are you looking for?");
             if (callRoster.containsKey(userSearch)){
-               System.out.println(callRoster.get(userSearch));
+               System.out.println(userSearch + "'s number is: " + callRoster.get(userSearch));
             }else {
                 System.out.println("Contact not found");
             }
         }
-
 
     public static void deleteContact() throws IOException {
         userInput.getString();
         String userSearch= userInput.getString("What contact are you looking to delete?");
         if (callRoster.containsKey(userSearch)){
             callRoster.remove(userSearch);
-            System.out.println(userSearch + " Removed from contact list.");
+            System.out.println(userSearch + " removed from contact list.");
         }else {
             System.out.println("Contact not found");
         }
-
     }
 
+    public static void exitAndSave() {
+
+    }
 
     public static void rosterSwitchCase() throws IOException {
         boolean pickOption = true;
 
         while (pickOption) {
-            System.out.println("1. View contact");
+            System.out.println("1. View all contacts.");
             System.out.println("2. Add new contact.");
             System.out.println("3. Search contact by name.");
             System.out.println("4. Delete an existing contact.");
@@ -108,6 +102,7 @@ public class ContactsApplication {
                     System.out.println();
                     if (userConfirm) {
                         pickOption = false;
+                        exitAndSave();
                         System.out.println("Program terminated...");
                     } else {
                         System.out.println("Please pick an option.");
@@ -116,7 +111,6 @@ public class ContactsApplication {
                 default:
                     break;
             }
-
         }
     }
 

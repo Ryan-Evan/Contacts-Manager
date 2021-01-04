@@ -40,7 +40,7 @@ public class Input {
     }
 
     public int getInt() {
-        System.out.println("Enter a number: ");
+//        System.out.println("Enter a number: ");
         return this.scanner.nextInt();
     }
 
